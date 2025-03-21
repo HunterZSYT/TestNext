@@ -59,6 +59,8 @@ import {
   useGlobalActions
 } from "@plasmicapp/react-web/lib/host";
 
+import { Fetcher } from "@plasmicapp/react-web/lib/data-sources";
+
 import { useScreenVariants as useScreenVariantsdbMap73KvQw } from "./PlasmicGlobalVariant__Screen"; // plasmic-import: dbMap73Kv-Qw/globalVariant
 
 import "@plasmicapp/react-web/lib/plasmic.css";
@@ -128,6 +130,24 @@ function PlasmicFooter__RenderFunc(props: {
   const $ctx = useDataEnv?.() || {};
   const refsRef = React.useRef({});
   const $refs = refsRef.current;
+
+  const stateSpecs: Parameters<typeof useDollarState>[0] = React.useMemo(
+    () => [
+      {
+        path: "variable",
+        type: "private",
+        variableType: "text",
+        initFunc: ({ $props, $state, $queries, $ctx }) => ""
+      }
+    ],
+    [$props, $ctx, $refs]
+  );
+  const $state = useDollarState(stateSpecs, {
+    $props,
+    $ctx,
+    $queries: {},
+    $refs
+  });
 
   const globalVariants = ensureGlobalVariants({
     screen: useScreenVariantsdbMap73KvQw()
@@ -249,6 +269,72 @@ function PlasmicFooter__RenderFunc(props: {
                   data-plasmic-name={"svg"}
                   data-plasmic-override={overrides.svg}
                   className={classNames(projectcss.all, sty.svg)}
+                  onClick={async event => {
+                    const $steps = {};
+
+                    $steps["goToHttpsWwwFacebookCom"] = true
+                      ? (() => {
+                          const actionArgs = {
+                            destination: "https://www.facebook.com/"
+                          };
+                          return (({ destination }) => {
+                            if (
+                              typeof destination === "string" &&
+                              destination.startsWith("#")
+                            ) {
+                              document
+                                .getElementById(destination.substr(1))
+                                .scrollIntoView({ behavior: "smooth" });
+                            } else {
+                              __nextRouter?.push(destination);
+                            }
+                          })?.apply(null, [actionArgs]);
+                        })()
+                      : undefined;
+                    if (
+                      $steps["goToHttpsWwwFacebookCom"] != null &&
+                      typeof $steps["goToHttpsWwwFacebookCom"] === "object" &&
+                      typeof $steps["goToHttpsWwwFacebookCom"].then ===
+                        "function"
+                    ) {
+                      $steps["goToHttpsWwwFacebookCom"] = await $steps[
+                        "goToHttpsWwwFacebookCom"
+                      ];
+                    }
+
+                    $steps["updateVariable"] = true
+                      ? (() => {
+                          const actionArgs = {
+                            variable: {
+                              objRoot: $state,
+                              variablePath: ["variable"]
+                            },
+                            operation: 0
+                          };
+                          return (({
+                            variable,
+                            value,
+                            startIndex,
+                            deleteCount
+                          }) => {
+                            if (!variable) {
+                              return;
+                            }
+                            const { objRoot, variablePath } = variable;
+
+                            $stateSet(objRoot, variablePath, value);
+                            return value;
+                          })?.apply(null, [actionArgs]);
+                        })()
+                      : undefined;
+                    if (
+                      $steps["updateVariable"] != null &&
+                      typeof $steps["updateVariable"] === "object" &&
+                      typeof $steps["updateVariable"].then === "function"
+                    ) {
+                      $steps["updateVariable"] = await $steps["updateVariable"];
+                    }
+                  }}
                   role={"img"}
                 />
               </PlasmicLink__>
@@ -405,19 +491,6 @@ function PlasmicFooter__RenderFunc(props: {
               )}
             >
               {"Built by Anna Wu"}
-            </div>
-          </div>
-          <div className={classNames(projectcss.all, sty.column__zsSJp)}>
-            <div
-              className={classNames(
-                projectcss.all,
-                projectcss.__wab_text,
-                sty.text__nZvY
-              )}
-            >
-              {hasVariant(globalVariants, "screen", "mobileOnly")
-                ? "Made in Plasmic"
-                : "Made in Plasmic"}
             </div>
           </div>
         </div>
